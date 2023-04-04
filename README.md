@@ -14,4 +14,4 @@ All dependencies are listed in [requirements](requirements.txt).
 
 To cite this pipeline, please use this paper as reference:
 
-    Vallat, Raphael, and Matthew P. Walker. "An open-source, high-performance tool for automated sleep staging." Elife 10 (2021). doi: https://doi.org/10.7554/eLife.70092
+ - Vallat, Raphael, and Matthew P. Walker. "An open-source, high-performance tool for automated sleep staging." Elife 10 (2021). doi: https://doi.org/10.7554/eLife.70092
