@@ -9,3 +9,9 @@ Python script analysing EEG signals before and after PTZ injection:
 This pipeline is optimised for Python 3.10.10 and above and was tested on Windows and macOS ARM.
 
 All dependencies are listed in [requirements](requirements.txt).
+
+# Citation
+
+To cite this pipeline, please use this paper as reference:
+
+    Vallat, Raphael, and Matthew P. Walker. "An open-source, high-performance tool for automated sleep staging." Elife 10 (2021). doi: https://doi.org/10.7554/eLife.70092
