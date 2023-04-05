@@ -89,9 +89,6 @@ for file in dir_edf:
 	print(data.shape)
 	data=pd.DataFrame(data.T)
 	EEG_wt=pd.concat([EEG_wt,data],ignore_index=True,axis=1)
-	#EEG_wt.append(data,ignore_index=True)
-
-
 else:
 	#region Data export
 	EEG_wt=EEG_wt.reset_index(drop=True)
@@ -101,23 +98,25 @@ else:
 	#Baseline window 10mn
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(600000,maxlen_wt))
-	EEG_wt_baseline['avEEG_WT']=EEG_wt_baseline[['WT43','WT63','WT66','WT70','WT71']].mean(axis=1)
-	EEG_wt_baseline['avzscore']=zscore(EEG_wt_baseline['avEEG_WT'])
+	EEG_wt_baseline['avzscore']=zscore(EEG_wt_baseline[['WT43','WT63','WT66','WT70','WT71']].mean(axis=1))
 	EEG_wt_baseline['WT43z']=zscore(EEG_wt_baseline['WT43'])
-
+	EEG_wt_baseline['WT63z']=zscore(EEG_wt_baseline['WT63'])
+	EEG_wt_baseline['WT66z']=zscore(EEG_wt_baseline['WT66'])
+	EEG_wt_baseline['WT70z']=zscore(EEG_wt_baseline['WT70'])
+	EEG_wt_baseline['WT71z']=zscore(EEG_wt_baseline['WT71'])
 
 	#TEST
-	maxval_wt1=max(EEG_wt_baseline['avzscore'])
-	minval_wt1=min(EEG_wt_baseline['avzscore'])
-	sd_pos_wt1=np.std(EEG_wt_baseline['avzscore'])*5
-	sd_neg_wt1=np.std(EEG_wt_baseline['avzscore'])*-5
-	wt1_thres_pos=np.array([np.NaN if diff_wt1_<sd_pos_wt1 else diff_wt1_ for diff_wt1_ in EEG_wt_baseline['WT43z']])
-	wt1_thres_pos=wt1_thres_pos[~np.isnan(wt1_thres_pos)]
-	#Scanning the whole recording to pin values that are strictly above the threshold
-	EEG_wt_baseline['Test']=EEG_wt_baseline['WT43z']>sd_pos_wt1
+	maxval_wt43=max(EEG_wt_baseline['avzscore'])
+	minval_wt43=min(EEG_wt_baseline['avzscore'])
+	sd_pos_wt43=np.std(EEG_wt_baseline['avzscore'])*5
+	sd_neg_wt43=np.std(EEG_wt_baseline['avzscore'])*-5
+	wt43_thres_pos=np.array([np.NaN if diff_wt43_<sd_pos_wt43 else diff_wt43_ for diff_wt43_ in EEG_wt_baseline['WT43z']])
+	wt43_thres_pos=wt43_thres_pos[~np.isnan(wt43_thres_pos)]
+	#Scan the recording to pin values strictly above the threshold
+	EEG_wt_baseline['Test']=EEG_wt_baseline['WT43z']>sd_pos_wt43
 	#Counting the values strictly above the threshold
-	count_wt1=EEG_wt_baseline['Test'].sum()
-	EEG_counts_wt1=EEG_wt_baseline.loc[EEG_wt_baseline['Test']==True]
+	count_wt43=EEG_wt_baseline['Test'].sum()
+	EEG_counts_wt43=EEG_wt_baseline.loc[EEG_wt_baseline['Test']==True]
 	#ENDTEST
 
 	#Envelope + plot baseline
@@ -139,6 +138,26 @@ else:
 	df.plot(cmap=cmap,linewidth=0.75)
 	plt.tight_layout()
 	plt.show()
+
+	mean_EEG=EEG_wt_baseline['WT43z']
+	EEG_time=range(len(EEG_wt_baseline.index))
+	Nfine=500
+	x=np.linspace(EEG_time[0],EEG_time[-1],len(EEG_time)*Nfine)
+	y=np.interp(x,EEG_time,mean_EEG)
+	cmap=ListedColormap(['grey','red'])
+	norm=BoundaryNorm([0,sd_pos_wt43,np.inf],cmap.N)
+	points=np.array([x,y]).T.reshape(-1,1,2)
+	segments=np.concatenate([points[:-1],points[1:]],axis=1)
+	lc=LineCollection(segments,cmap=cmap,norm=norm)
+	lc.set_array(y)
+	lc.set_linewidth(0.75)
+	plt.gca().add_collection(lc)
+	plt.xlim(x.min(),x.max())
+	#plt.ylim(y.min(),y.max())
+	#plt.ylim(-60,60)
+	plt.tight_layout()
+	plt.show()
+
 
 	name00="EEG_SOD-WT_env.png"
 	path00=os.path.join(path,name00)
