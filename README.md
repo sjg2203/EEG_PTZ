@@ -1,6 +1,7 @@
 # EEG_PTZ
 
 Python script analysing EEG signals before and after PTZ injection:
+ - Import .mat files
  - Filters the signal using band-stop method and repairs artifacts ([ICA](https://mne.tools/stable/auto_tutorials/preprocessing/40_artifact_correction_ica.html))
  - Generates power spectrum plot using Welch method
  - Computes an averaged Z-Score to generate a threshold and fetches events strictly above it
