@@ -47,7 +47,7 @@ from fooof.plts.spectra import plot_spectrum,plot_spectra
 #region Envelope analysis SOD
 #region EEG WT upload
 
-#region Dir path
+#region Dir path SOD-WT
 path=fd.askdirectory(title='SELECT WHERE TO SAVE PLOTS')
 inpath=fd.askdirectory(title='SELECT DATA DIRECTORY')
 dir_edf=sorted(glob.glob(os.path.join(inpath,'*.edf')))
@@ -81,8 +81,8 @@ for file in dir_edf:
 	raw_notch=raw_notch.notch_filter(sf,filter_length='auto',method='spectrum_fit',fir_window='hamm')
 	raw_notch.compute_psd().plot()
 	raw_notch.compute_psd(fmax=55,n_overlap=5,n_fft=1000).plot()
-	raw_hil=raw_notch.apply_hilbert(envelope=True)
-	raw_hil.compute_psd().plot()
+	mne_sigs=raw_notch.get_data()
+	print('Data in mV:',np.sum(np.abs(mne_sigs))/mne_sigs.size)
 	data=raw_notch.get_data(units="uV")
 	print(data.shape)
 	data=data.reshape(-1)
@@ -98,25 +98,40 @@ else:
 	#Baseline window 10mn
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(600000,maxlen_wt))
-	EEG_wt_baseline['avzscore']=zscore(EEG_wt_baseline[['WT43','WT63','WT66','WT70','WT71']].mean(axis=1))
-	EEG_wt_baseline['WT43z']=zscore(EEG_wt_baseline['WT43'])
-	EEG_wt_baseline['WT63z']=zscore(EEG_wt_baseline['WT63'])
-	EEG_wt_baseline['WT66z']=zscore(EEG_wt_baseline['WT66'])
-	EEG_wt_baseline['WT70z']=zscore(EEG_wt_baseline['WT70'])
-	EEG_wt_baseline['WT71z']=zscore(EEG_wt_baseline['WT71'])
+	EEG_wt_baseline['WT43z']=zscore(EEG_wt_baseline['WT43'],nan_policy='omit')
+	EEG_wt_baseline['WT63z']=zscore(EEG_wt_baseline['WT63'],nan_policy='omit')
+	EEG_wt_baseline['WT66z']=zscore(EEG_wt_baseline['WT66'],nan_policy='omit')
+	EEG_wt_baseline['WT70z']=zscore(EEG_wt_baseline['WT70'],nan_policy='omit')
+	EEG_wt_baseline['WT71z']=zscore(EEG_wt_baseline['WT71'],nan_policy='omit')
+
+	#PTZ injection window 10mn
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,1020001))+list(range(1620001,maxlen_wt+1)))
+	EEG_wt_PTZ['WT43pz']=zscore(EEG_wt_PTZ['WT43'],nan_policy='omit')
+	EEG_wt_PTZ['WT63pz']=zscore(EEG_wt_PTZ['WT63'],nan_policy='omit')
+	EEG_wt_PTZ['WT66pz']=zscore(EEG_wt_PTZ['WT66'],nan_policy='omit')
+	EEG_wt_PTZ['WT70pz']=zscore(EEG_wt_PTZ['WT70'],nan_policy='omit')
+	EEG_wt_PTZ['WT71pz']=zscore(EEG_wt_PTZ['WT71'],nan_policy='omit')
+
+
+
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+
+
+	test=EEG_wt_PTZ.where(EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z'])
+	test=EEG_wt_PTZ.where(EEG_wt_PTZ['WT43pz']>=EEG_wt_baseline['WT43z'])
+
 
 	#TEST
-	maxval_wt43=max(EEG_wt_baseline['avzscore'])
-	minval_wt43=min(EEG_wt_baseline['avzscore'])
-	sd_pos_wt43=np.std(EEG_wt_baseline['avzscore'])*5
-	sd_neg_wt43=np.std(EEG_wt_baseline['avzscore'])*-5
-	wt43_thres_pos=np.array([np.NaN if diff_wt43_<sd_pos_wt43 else diff_wt43_ for diff_wt43_ in EEG_wt_baseline['WT43z']])
-	wt43_thres_pos=wt43_thres_pos[~np.isnan(wt43_thres_pos)]
+	wt43z_thres_pos=np.array([np.NaN if EEG_wt_PTZ['WT43pz']<EEG_wt_baseline['WT43z'] else EEG_wt_PTZ['WT43pz'] for EEG_wt_PTZ['WT43pz'] in EEG_wt_baseline['WT43z']])
+	wt43z_thres_pos=wt43z_thres_pos[~np.isnan(wt43z_thres_pos)]
 	#Scan the recording to pin values strictly above the threshold
-	EEG_wt_baseline['Test']=EEG_wt_baseline['WT43z']>sd_pos_wt43
+	EEG_test=pd.DataFrame()
+	EEG_test['WT43_score']=EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z']
+	Test=EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z']
 	#Counting the values strictly above the threshold
-	count_wt43=EEG_wt_baseline['Test'].sum()
-	EEG_counts_wt43=EEG_wt_baseline.loc[EEG_wt_baseline['Test']==True]
+	count_wt43z=EEG_test['WT43_score'].sum()
+	EEG_counts_wt43z=EEG_test.loc[EEG_test['WT43_score']==True]
 	#ENDTEST
 
 	#Envelope + plot baseline
@@ -165,9 +180,7 @@ else:
 	plt.show()
 	print("Plot done.")
 
-	#PTZ injection window 10mn
-	EEG_wt_PTZ=EEG_wt.drop(list(range(0,1020000))+list(range(1620000,maxlen_wt)))
-	EEG_wt_PTZ['avEEG_WT']=EEG_wt_PTZ[['WT43','WT63','WT66','WT70','WT71']].mean(axis=1)
+
 
 
 	name1=('EEG_WT.csv')
