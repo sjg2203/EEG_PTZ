@@ -93,19 +93,137 @@ else:
 	EEG_wt.index=range(1,EEG_wt.shape[0]+1)
 	EEG_wt.columns=['wt43','wt63','wt66','wt70','wt71']
 
+
+	#region zscore WORKING ONE
+	baseline_stop=10*60000
+	maxlen_wt=len(EEG_wt.index)
+	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
+	inject_t0=int(baseline_stop+(6*60000))
+	inject_t1=int(inject_t0+(10*60000))
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+	z=pd.DataFrame(EEG_wt_baseline['wt43'])
+	y=pd.DataFrame(EEG_wt_PTZ['wt43'])
+	WT43z=zscore(z,nan_policy='omit')
+	WT43zptz=zscore(y,nan_policy='omit')
+	EEG_comp=pd.DataFrame(WT43zptz>WT43z)
+	EEG_comp["wt43"]=EEG_comp["wt43"].astype(int)
+	count_wt43=EEG_comp['wt43'].sum()
+	EEG_counts_wt43=EEG_comp.loc[EEG_comp['wt43']==True]
+	latency=EEG_comp['wt43'].idxmax()+60
+	latency=latency/60
+	frac,whole=math.modf(latency)
+	frac=0.6*frac
+	latency=whole+frac
+	print(latency)
+	
+	baseline_stop=10*60000
+	maxlen_wt=len(EEG_wt.index)
+	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
+	inject_t0=int(baseline_stop+(5.51*60000))
+	inject_t1=int(inject_t0+(10*60000))
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+	z=pd.DataFrame(EEG_wt_baseline['wt63'])
+	y=pd.DataFrame(EEG_wt_PTZ['wt63'])
+	WT63z=zscore(z,nan_policy='omit')
+	WT63zptz=zscore(y,nan_policy='omit')
+	EEG_comp=pd.DataFrame(WT63zptz>WT63z)
+	EEG_comp["wt63"]=EEG_comp["wt63"].astype(int)
+	count_wt63=EEG_comp['wt63'].sum()
+	EEG_counts_wt63=EEG_comp.loc[EEG_comp['wt63']==True]
+	latency=EEG_comp['wt63'].idxmax()+60
+	latency=latency/60
+	frac,whole=math.modf(latency)
+	frac=0.6*frac
+	latency=whole+frac
+	print(latency)
+	
+	baseline_stop=10*60000
+	maxlen_wt=len(EEG_wt.index)
+	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
+	inject_t0=int(baseline_stop+(5.48*60000))
+	inject_t1=int(inject_t0+(10*60000))
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+	z=pd.DataFrame(EEG_wt_baseline['wt66'])
+	y=pd.DataFrame(EEG_wt_PTZ['wt66'])
+	WT66z=zscore(z,nan_policy='omit')
+	WT66zptz=zscore(y,nan_policy='omit')
+	EEG_comp=pd.DataFrame(WT66zptz>WT66z)
+	EEG_comp["wt66"]=EEG_comp["wt66"].astype(int)
+	count_wt66=EEG_comp['wt66'].sum()
+	EEG_counts_wt66=EEG_comp.loc[EEG_comp['wt66']==True]
+	latency=EEG_comp['wt66'].idxmax()+60
+	latency=latency/60
+	frac,whole=math.modf(latency)
+	frac=0.6*frac
+	latency=whole+frac
+	print(latency)
+	
+	baseline_stop=10*60000
+	maxlen_wt=len(EEG_wt.index)
+	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
+	inject_t0=int(baseline_stop+(6.04*60000))
+	inject_t1=int(inject_t0+(10*60000))
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+	z=pd.DataFrame(EEG_wt_baseline['wt70'])
+	y=pd.DataFrame(EEG_wt_PTZ['wt70'])
+	WT70z=zscore(z,nan_policy='omit')
+	WT70zptz=zscore(y,nan_policy='omit')
+	EEG_comp=pd.DataFrame(WT70zptz>WT70z)
+	EEG_comp["wt70"]=EEG_comp["wt70"].astype(int)
+	count_wt70=EEG_comp['wt70'].sum()
+	EEG_counts_wt70=EEG_comp.loc[EEG_comp['wt70']==True]
+	latency=EEG_comp['wt70'].idxmax()+60
+	latency=latency/60
+	frac,whole=math.modf(latency)
+	frac=0.6*frac
+	latency=whole+frac
+	print(latency)
+	
+	baseline_stop=10*60000
+	maxlen_wt=len(EEG_wt.index)
+	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
+	inject_t0=int(baseline_stop+(5.56*60000))
+	inject_t1=int(inject_t0+(10*60000))
+	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
+	EEG_wt_baseline=EEG_wt_baseline.reset_index()
+	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
+	z=pd.DataFrame(EEG_wt_baseline['wt71'])
+	y=pd.DataFrame(EEG_wt_PTZ['wt71'])
+	WT71z=zscore(z,nan_policy='omit')
+	WT71zptz=zscore(y,nan_policy='omit')
+	EEG_comp=pd.DataFrame(WT71zptz>WT71z)
+	EEG_comp["wt71"]=EEG_comp["wt71"].astype(int)
+	count_wt71=EEG_comp['wt71'].sum()
+	EEG_counts_wt71=EEG_comp.loc[EEG_comp['wt71']==True]
+	latency=EEG_comp['wt71'].idxmax()+60
+	latency=latency/60
+	frac,whole=math.modf(latency)
+	frac=0.6*frac
+	latency=whole+frac
+	print(latency)
+	#endregion
+
 	#region wt43
 	#Baseline window 10mn
 	baseline_stop=10*60000
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(6*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_wt43=EEG_wt_baseline['wt43'].mean(axis=0)
+	mean_wt43=abs(EEG_wt_baseline['wt43'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_wt_PTZ['wt43']>mean_wt43)
 	EEG_comp["wt43"]=EEG_comp["wt43"].astype(int)
 	#Counting the values strictly above
@@ -127,13 +245,13 @@ else:
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.51*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(5.51*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_wt63=EEG_wt_baseline['wt63'].mean(axis=0)
+	mean_wt63=abs(EEG_wt_baseline['wt63'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_wt_PTZ['wt63']>mean_wt63)
 	EEG_comp["wt63"]=EEG_comp["wt63"].astype(int)
 	#Counting the values strictly above
@@ -155,13 +273,13 @@ else:
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.48*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(5.48*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_wt66=EEG_wt_baseline['wt66'].mean(axis=0)
+	mean_wt66=abs(EEG_wt_baseline['wt66'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_wt_PTZ['wt66']>mean_wt66)
 	EEG_comp["wt66"]=EEG_comp["wt66"].astype(int)
 	#Counting the values strictly above
@@ -183,13 +301,13 @@ else:
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(6.04*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6.04*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_wt70=EEG_wt_baseline['wt70'].mean(axis=0)
+	mean_wt70=abs(EEG_wt_baseline['wt70'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_wt_PTZ['wt70']>mean_wt70)
 	EEG_comp["wt70"]=EEG_comp["wt70"].astype(int)
 	#Counting the values strictly above
@@ -211,13 +329,13 @@ else:
 	maxlen_wt=len(EEG_wt.index)
 	EEG_wt_baseline=EEG_wt.drop(range(baseline_stop,maxlen_wt))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.56*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(5.56*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_wt_PTZ=EEG_wt.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_wt+1)))
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_wt71=EEG_wt_baseline['wt71'].mean(axis=0)
+	mean_wt71=abs(EEG_wt_baseline['wt71'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_wt_PTZ['wt71']>mean_wt71)
 	EEG_comp["wt71"]=EEG_comp["wt71"].astype(int)
 	#Counting the values strictly above
@@ -286,13 +404,13 @@ else:
 	maxlen_sod=len(EEG_sod.index)
 	EEG_sod_baseline=EEG_sod.drop(range(baseline_stop,maxlen_sod))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(6*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6.26*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_sod_PTZ=EEG_sod.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_sod+1)))
 	EEG_sod_baseline=EEG_sod_baseline.reset_index()
 	EEG_sod_PTZ=EEG_sod_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_sod45=EEG_sod_baseline['sod45'].mean(axis=0)
+	mean_sod45=abs(EEG_sod_baseline['sod45'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_sod_PTZ['sod45']>mean_sod45)
 	EEG_comp["sod45"]=EEG_comp["sod45"].astype(int)
 	#Counting the values strictly above
@@ -314,13 +432,13 @@ else:
 	maxlen_sod=len(EEG_sod.index)
 	EEG_sod_baseline=EEG_sod.drop(range(baseline_stop,maxlen_sod))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.51*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6.08*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_sod_PTZ=EEG_sod.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_sod+1)))
 	EEG_sod_baseline=EEG_sod_baseline.reset_index()
 	EEG_sod_PTZ=EEG_sod_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_sod61=EEG_sod_baseline['sod61'].mean(axis=0)
+	mean_sod61=abs(EEG_sod_baseline['sod61'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_sod_PTZ['sod61']>mean_sod61)
 	EEG_comp["sod61"]=EEG_comp["sod61"].astype(int)
 	#Counting the values strictly above
@@ -342,13 +460,13 @@ else:
 	maxlen_sod=len(EEG_sod.index)
 	EEG_sod_baseline=EEG_sod.drop(range(baseline_stop,maxlen_sod))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.48*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6.12*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_sod_PTZ=EEG_sod.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_sod+1)))
 	EEG_sod_baseline=EEG_sod_baseline.reset_index()
 	EEG_sod_PTZ=EEG_sod_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_sod64=EEG_sod_baseline['sod64'].mean(axis=0)
+	mean_sod64=abs(EEG_sod_baseline['sod64'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_sod_PTZ['sod64']>mean_sod64)
 	EEG_comp["sod64"]=EEG_comp["sod64"].astype(int)
 	#Counting the values strictly above
@@ -370,13 +488,13 @@ else:
 	maxlen_sod=len(EEG_sod.index)
 	EEG_sod_baseline=EEG_sod.drop(range(baseline_stop,maxlen_sod))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(6.04*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(6.11*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_sod_PTZ=EEG_sod.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_sod+1)))
 	EEG_sod_baseline=EEG_sod_baseline.reset_index()
 	EEG_sod_PTZ=EEG_sod_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_sod65=EEG_sod_baseline['sod65'].mean(axis=0)
+	mean_sod65=abs(EEG_sod_baseline['sod65'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_sod_PTZ['sod65']>mean_sod65)
 	EEG_comp["sod65"]=EEG_comp["sod65"].astype(int)
 	#Counting the values strictly above
@@ -398,13 +516,13 @@ else:
 	maxlen_sod=len(EEG_sod.index)
 	EEG_sod_baseline=EEG_sod.drop(range(baseline_stop,maxlen_sod))
 	#PTZ injection window 10mn
-	inject_t0=baseline_stop+(5.56*60000)
-	inject_t1=inject_t0+(10*60000)
+	inject_t0=int(baseline_stop+(5.45*60000))
+	inject_t1=int(inject_t0+(10*60000))
 	EEG_sod_PTZ=EEG_sod.drop(list(range(1,inject_t0))+list(range(inject_t1,maxlen_sod+1)))
 	EEG_sod_baseline=EEG_sod_baseline.reset_index()
 	EEG_sod_PTZ=EEG_sod_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_sod69=EEG_sod_baseline['sod69'].mean(axis=0)
+	mean_sod69=abs(EEG_sod_baseline['sod69'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_sod_PTZ['sod69']>mean_sod69)
 	EEG_comp["sod69"]=EEG_comp["sod69"].astype(int)
 	#Counting the values strictly above
@@ -479,7 +597,7 @@ else:
 	EEG_fus_wt_baseline=EEG_fus_wt_baseline.reset_index()
 	EEG_fus_wt_PTZ=EEG_fus_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus_wt358=EEG_fus_wt_baseline['fus_wt358'].mean(axis=0)
+	mean_fus_wt358=abs(EEG_fus_wt_baseline['fus_wt358'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_wt_PTZ['fus_wt358']>mean_fus_wt358)
 	EEG_comp["fus_wt358"]=EEG_comp["fus_wt358"].astype(int)
 	#Counting the values strictly above
@@ -507,7 +625,7 @@ else:
 	EEG_fus_wt_baseline=EEG_fus_wt_baseline.reset_index()
 	EEG_fus_wt_PTZ=EEG_fus_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus_wt360=EEG_fus_wt_baseline['fus_wt360'].mean(axis=0)
+	mean_fus_wt360=abs(EEG_fus_wt_baseline['fus_wt360'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_wt_PTZ['fus_wt360']>mean_fus_wt360)
 	EEG_comp["fus_wt360"]=EEG_comp["fus_wt360"].astype(int)
 	#Counting the values strictly above
@@ -535,7 +653,7 @@ else:
 	EEG_fus_wt_baseline=EEG_fus_wt_baseline.reset_index()
 	EEG_fus_wt_PTZ=EEG_fus_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus_wt361=EEG_fus_wt_baseline['fus_wt361'].mean(axis=0)
+	mean_fus_wt361=abs(EEG_fus_wt_baseline['fus_wt361'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_wt_PTZ['fus_wt361']>mean_fus_wt361)
 	EEG_comp["fus_wt361"]=EEG_comp["fus_wt361"].astype(int)
 	#Counting the values strictly above
@@ -563,7 +681,7 @@ else:
 	EEG_fus_wt_baseline=EEG_fus_wt_baseline.reset_index()
 	EEG_fus_wt_PTZ=EEG_fus_wt_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus_wt363=EEG_fus_wt_baseline['fus_wt363'].mean(axis=0)
+	mean_fus_wt363=abs(EEG_fus_wt_baseline['fus_wt363'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_wt_PTZ['fus_wt363']>mean_fus_wt363)
 	EEG_comp["fus_wt363"]=EEG_comp["fus_wt363"].astype(int)
 	#Counting the values strictly above
@@ -638,7 +756,7 @@ else:
 	EEG_fus_baseline=EEG_fus_baseline.reset_index()
 	EEG_fus_PTZ=EEG_fus_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus362=EEG_fus_baseline['fus362'].mean(axis=0)
+	mean_fus362=abs(EEG_fus_baseline['fus362'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_PTZ['fus362']>mean_fus362)
 	EEG_comp["fus362"]=EEG_comp["fus362"].astype(int)
 	#Counting the values strictly above
@@ -666,7 +784,7 @@ else:
 	EEG_fus_baseline=EEG_fus_baseline.reset_index()
 	EEG_fus_PTZ=EEG_fus_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus364=EEG_fus_baseline['fus364'].mean(axis=0)
+	mean_fus364=abs(EEG_fus_baseline['fus364'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_PTZ['fus364']>mean_fus364)
 	EEG_comp["fus364"]=EEG_comp["fus364"].astype(int)
 	#Counting the values strictly above
@@ -694,7 +812,7 @@ else:
 	EEG_fus_baseline=EEG_fus_baseline.reset_index()
 	EEG_fus_PTZ=EEG_fus_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus365=EEG_fus_baseline['fus365'].mean(axis=0)
+	mean_fus365=abs(EEG_fus_baseline['fus365'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_PTZ['fus365']>mean_fus365)
 	EEG_comp["fus365"]=EEG_comp["fus365"].astype(int)
 	#Counting the values strictly above
@@ -722,7 +840,7 @@ else:
 	EEG_fus_baseline=EEG_fus_baseline.reset_index()
 	EEG_fus_PTZ=EEG_fus_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus372=EEG_fus_baseline['fus372'].mean(axis=0)
+	mean_fus372=abs(EEG_fus_baseline['fus372'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_PTZ['fus372']>mean_fus372)
 	EEG_comp["fus372"]=EEG_comp["fus372"].astype(int)
 	#Counting the values strictly above
@@ -750,7 +868,7 @@ else:
 	EEG_fus_baseline=EEG_fus_baseline.reset_index()
 	EEG_fus_PTZ=EEG_fus_PTZ.reset_index()
 	#Calculate baseline mean for comparison with PTZ
-	mean_fus373=EEG_fus_baseline['fus373'].mean(axis=0)
+	mean_fus373=abs(EEG_fus_baseline['fus373'].mean(axis=0))
 	EEG_comp=pd.DataFrame(EEG_fus_PTZ['fus373']>mean_fus373)
 	EEG_comp["fus373"]=EEG_comp["fus373"].astype(int)
 	#Counting the values strictly above
