@@ -112,15 +112,31 @@ else:
 	EEG_wt_PTZ['WT70pz']=zscore(EEG_wt_PTZ['WT70'],nan_policy='omit')
 	EEG_wt_PTZ['WT71pz']=zscore(EEG_wt_PTZ['WT71'],nan_policy='omit')
 
-
-
+	EEG_wt_baseline=pd.DataFrame()
+	EEG_wt_PTZ=pd.DataFrame()
 	EEG_wt_baseline=EEG_wt_baseline.reset_index()
 	EEG_wt_PTZ=EEG_wt_PTZ.reset_index()
 
 
-	test=EEG_wt_PTZ.where(EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z'])
-	test=EEG_wt_PTZ.where(EEG_wt_PTZ['WT43pz']>=EEG_wt_baseline['WT43z'])
+	test=EEG_wt_PTZ['WT43pz'].where(EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z'])
 
+	mean_wt43=EEG_wt_baseline['WT43'].mean(axis=0)
+	test=pd.DataFrame(EEG_wt_PTZ['WT43']>mean_wt43)
+	test["WT43"]=test["WT43"].astype(int)
+	#Counting the values strictly above the threshold
+	count_wt1=test.sum()
+	EEG_counts_wt1=test.loc[test[0]==True]
+	#Percentage of event above mean of baseline
+	x=(count_wt1/len(test))*100
+	#Latency to first event
+	latency=test['WT43'].idxmax()
+
+
+
+	test=pd.DataFrame()
+	test['WT43']=np.where(EEG_wt_PTZ['WT43pz']>EEG_wt_baseline['WT43z'],True,False)
+	count_wt43z=test['WT43'].sum()
+	EEG_counts_wt43z=test.loc[test['WT43']==True]
 
 	#TEST
 	wt43z_thres_pos=np.array([np.NaN if EEG_wt_PTZ['WT43pz']<EEG_wt_baseline['WT43z'] else EEG_wt_PTZ['WT43pz'] for EEG_wt_PTZ['WT43pz'] in EEG_wt_baseline['WT43z']])
