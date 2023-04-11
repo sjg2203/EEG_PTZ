@@ -8,7 +8,7 @@ Python script analysing EEG signals before and after PTZ injection:
  - Compares each baseline Z-score to its corresponding PTZ window
  - Returns the event count during PTZ window that are above baseline and the latency of the first event in minutes
 
-This pipeline is optimised for Python 3.10.10 and above and was tested on Windows and macOS ARM.
+This pipeline is optimised for Python 3.10.11 and above and was tested on Windows and macOS ARM.
 
 All dependencies are listed in [requirements](requirements.txt).
 
