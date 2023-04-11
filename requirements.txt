@@ -1,7 +1,5 @@
 glob
-matplotlib>=3.6.3
-matplotlib-backend-qtquick>=0.0.8
-matplotlib-inline>=0.1.6
+math
 mne>=1.3.0
 mne-features>=0.2.1
 mne-qt-browser>=0.4.0
@@ -9,15 +7,10 @@ mne-realtime>=0.2.0
 mnelab>=0.8.5
 numba>=0.56.4
 numpy>=1.23.5
-palettable>=3.3.0
 pandas>=1.5.3
 pandas-flavor>=0.3.0
 pandocfilters>=1.5.0
 pyEDFlib>=0.1.30
-Pygments>=2.14.0
 PySimpleGUI>=4.60.4
 scipy>=1.10.0
-seaborn>=0.12.2
-termcolor>=2.2.0
-time
 tkinter
