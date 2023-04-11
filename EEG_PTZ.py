@@ -15,34 +15,10 @@ import os
 import mne
 import glob
 import math
-import yasa
-import time
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import pingouin as pg
-import statistics as st
-import PySimpleGUI as sg
-import scipy.stats as stats
-import matplotlib.pyplot as plt
-from fooof import FOOOF
-from scipy import signal
-from tensorpac import Pac
-from scipy.fft import fft
-from scipy.stats import sem
 from scipy.stats import zscore
-from mne.preprocessing import ICA
-from scipy.integrate import simpson
 from tkinter import filedialog as fd
-from coffeine import compute_features
-from scipy.signal import welch,hilbert
-from sklearn.metrics import accuracy_score
-from mne_features.utils import power_spectrum
-from matplotlib.collections import LineCollection
-from mne.time_frequency import psd_array_multitaper
-from mne_features.univariate import compute_spect_slope
-from matplotlib.colors import ListedColormap,BoundaryNorm
-from fooof.plts.spectra import plot_spectrum,plot_spectra
 
 
 #region SOD-WT
