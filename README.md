@@ -16,7 +16,7 @@ All dependencies are listed in [requirements](requirements.txt).
 
 This pipeline was created and is maintained by SJG. Contributions are more than welcome so feel free to open an issue or submit a pull request!
 
-To see the code or report a bug, please visit the `GitHub repository <https://github.com/sjg2203/EEG_PTZ>`_.
+To see the code or report a bug, please visit the [GitHub repository](<https://github.com/sjg2203/EEG_PTZ>).
 
 Note that this program is provided with NO WARRANTY OF ANY KIND under Apache 2.0 [license](LICENSE).
 
