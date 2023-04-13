@@ -12,8 +12,7 @@ This pipeline is optimised for Python 3.10.11 and above and was tested on Window
 
 All dependencies are listed in [requirements](requirements.txt).
 
-Development
-~~~~~~~~~~~
+# Development
 
 This pipeline was created and is maintained by SJG. Contributions are more than welcome so feel free to open an issue or submit a pull request!
 
