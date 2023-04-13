@@ -12,6 +12,15 @@ This pipeline is optimised for Python 3.10.11 and above and was tested on Window
 
 All dependencies are listed in [requirements](requirements.txt).
 
+Development
+~~~~~~~~~~~
+
+This pipeline was created and is maintained by SJG. Contributions are more than welcome so feel free to open an issue or submit a pull request!
+
+To see the code or report a bug, please visit the `GitHub repository <https://github.com/sjg2203/EEG_PTZ>`_.
+
+Note that this program is provided with NO WARRANTY OF ANY KIND under Apache 2.0 [license](LICENSE).
+
 # Citation
 
 To cite this pipeline, please use this paper as reference:
