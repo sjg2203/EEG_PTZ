@@ -1,16 +1,16 @@
 # Analysis pipeline EEG with PTZ injection
 
 Python script analysing EEG signals before and after PTZ injection:
- - Import .edf files
+ - Imports .edf files
  - Filters the signal using a notch filter and band-stop method
  - Creates a baseline and after PTZ injection window for each recording
- - Normalizes using Z-score each recordings
- - Compares each baseline Z-score to its corresponding PTZ window
+ - Normalizes each recordings using Z-score
+ - Compares each baseline Z-score to its corresponding PTZ Z-score
  - Returns the event count during PTZ window that are above baseline and the latency of the first event in minutes
 
-This pipeline is optimised for Python 3.10.11 and above and was tested on Windows and macOS ARM.
+This pipeline is optimised for Python 3.10.11 and above and was tested on both Windows and macOS ARM.
 
-All dependencies are listed in [requirements](requirements.txt).
+*All dependencies are listed in [requirements](requirements.txt).
 
 # Development
 
