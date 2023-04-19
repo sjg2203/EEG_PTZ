@@ -24,4 +24,4 @@ Note that this program is provided with NO WARRANTY OF ANY KIND under Apache 2.0
 
 To cite this pipeline, please use this paper as reference:
 
- - Scekic-Zahirovic J., Benetton C., Brunet A. *et al*., "Noradrenaline deficiency as a driver of cortical hyperexcitability in amyotrophic lateral sclerosis" Science Translational Medicine (2023). doi: https://doi.org/10.7554/eLife.70092
+ - Scekic-Zahirovic J., Benetton C., Brunet A. *et al*., "Noradrenaline deficiency as a driver of cortical hyperexcitability in amyotrophic lateral sclerosis" Science Translational Medicine (2023). doi: 
